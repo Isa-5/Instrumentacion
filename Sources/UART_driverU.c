@@ -39,7 +39,7 @@ void UART_Init(UART_MemMapPtr base, uart_config_t *config, uint32_t srcClock_Hz)
 
 		if (base==UART1_BASE_PTR ) //init UART1
 		{
-			SIM_SCGC5|= SIM_SCGC5_PORTC_MASK; //PTC 3 y 4 ALT3
+			SIM_SCGC5|= SIM_SCGC5_PORTC_MASK; //PTC 3Rx y 4Tx ALT3
 			PORTC_PCR3|= PORT_PCR_MUX(PCR_MUX_PORTC);
 			PORTC_PCR4|= PORT_PCR_MUX(PCR_MUX_PORTC);
 			SIM_SCGC4|= SIM_SCGC4_UART1_MASK;
@@ -49,7 +49,7 @@ void UART_Init(UART_MemMapPtr base, uart_config_t *config, uint32_t srcClock_Hz)
 		}
 		else if(base==UART2_BASE_PTR ) //init UART2
 		{
-			SIM_SCGC5|=SIM_SCGC5_PORTE_MASK; //PTE22 y 23 ALT4
+			SIM_SCGC5|=SIM_SCGC5_PORTE_MASK; //PTE 22Tx y 23Rx ALT4
 			PORTE_PCR22|= PORT_PCR_MUX(PCR_MUX_PORTE);
 			PORTE_PCR23|= PORT_PCR_MUX(PCR_MUX_PORTE);
 			SIM_SCGC4|= SIM_SCGC4_UART2_MASK;
