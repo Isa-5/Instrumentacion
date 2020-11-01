@@ -21,8 +21,14 @@
 #define Channel_0 			(0)
 #define Prescaler_4 		(2)
 
+typedef enum {
+	en8bits= 0,
+	en10bits,
+	en12bits,
+	en16bits
+}ADC_resolution;
 
-void ADC_Init(void);
+void ADC_Init(ADC_resolution mode);
 uint16_t ADC_Polling (uint8_t Channel);
 
 

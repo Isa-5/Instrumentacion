@@ -3,7 +3,10 @@
 "./Project_Settings/Startup_Code/__arm_end.o"
 "./Sources/sa_mtb.o"
 "./Sources/main.o"
+"./Sources/conversion_ADC.o"
 "./Sources/UART_driverU.o"
+"./Sources/LPTMR_driver.o"
+"./Sources/ADC0_driver.o"
 -mcpu=cortex-m0
 -mthumb
 -mfloat-abi=soft

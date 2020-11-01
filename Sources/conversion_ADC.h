@@ -1,39 +1,48 @@
 /*
- * UART_driverU.h
+ * conversion_ADC.h
  *
  *  Created on: Oct 31, 2020
  *      Author: isae_
  */
 
-#ifndef UART_DRIVERU_H_
-#define UART_DRIVERU_H_
+#ifndef CONVERSION_ADC_H_
+#define CONVERSION_ADC_H_
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      Includes Section
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
 #include "MKL25Z4.h"
-#include "derivative.h"
+#include "ADC0_driver.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      Define Section
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define TRUE (1)
-#define FALSE (0)
-#define PCR_MUX_PORTC (3)
-#define PCR_MUX_PORTE (4)
+#define TERMOPAR  
 
+#ifdef TERMOPAR 
 
-typedef void(*funcion_de_recieve)(uint8_t);
+#define Init_ADC()     ADC_Init(en16bits)
+#define size_Table    (uint8_t)((sizeof (Tabla_Termopar))/(sizeof (Tabla_Termopar[0])))  //la cantidad de espacios en el arreglo
+	
+#else
 
+#define Init_ADC()     ADC_Init(en10bits)//Para LM35
 
+#endif
+
+#define Medidor_input()   ADC_Polling (0)
+
+typedef struct {
+	uint32_t valor_crudo;
+	uint8_t valor_grados;
+}Mapeo_valores;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//                                      Functions Section
+//                                      Function Section
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void UART_transmit (uint8_t *transmision,UART_MemMapPtr UART_Tx);
-void UART_Init(UART_MemMapPtr base, funcion_de_recieve call_back , uint32_t srcClock_Hz, uint32_t baud_rate);
+void medidor_init (void);
 
-#endif /* UART_DRIVERU_H_ */
+
+#endif /* CONVERSION_ADC_H_ */

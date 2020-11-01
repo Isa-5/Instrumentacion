@@ -18,12 +18,12 @@
 //                                      Functions Section
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ADC_Init(void)
+void ADC_Init(ADC_resolution mode)
 {
 	SIM_SCGC6|=SIM_SCGC6_ADC0_MASK; //CLK de ADC0
 	SIM_SCGC5|=SIM_SCGC5_PORTE_MASK;//Puerto E20
 	//PTE20 ADC0 default
-	ADC0_CFG1|= (ADC_CFG1_MODE(MODE_10b)|ADC_CFG1_ADIV(Prescaler_4)); //bus clock 24MHz, vel de muestreo
+	ADC0_CFG1|= (ADC_CFG1_MODE(mode)|ADC_CFG1_ADIV(Prescaler_4)); //bus clock 24MHz, vel de muestreo
 	
 }
 

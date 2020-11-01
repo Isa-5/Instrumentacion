@@ -26,7 +26,7 @@ funcion_de_recieve data_recieve2;
 //                                      Functions Section
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void UART_Init(UART_MemMapPtr base, uart_config_t *config, uint32_t srcClock_Hz)
+void UART_Init(UART_MemMapPtr base, funcion_de_recieve call_back , uint32_t srcClock_Hz, uint32_t baud_rate)
 {
 	if ((base==UART1_BASE_PTR)||(base==UART2_BASE_PTR))//seguridad, solamente si selecciono parametros validos se escribo sino no hace nada
 	{
@@ -34,7 +34,7 @@ void UART_Init(UART_MemMapPtr base, uart_config_t *config, uint32_t srcClock_Hz)
 		uint8_t temp = 0;
 
 		/* Calculate the baud rate modulo divisor, sbr*/
-		sbr = srcClock_Hz / (config->baudRate_Bps * 16);
+		sbr = srcClock_Hz / (baud_rate * 16);
 		
 
 		if (base==UART1_BASE_PTR ) //init UART1
@@ -44,7 +44,7 @@ void UART_Init(UART_MemMapPtr base, uart_config_t *config, uint32_t srcClock_Hz)
 			PORTC_PCR4|= PORT_PCR_MUX(PCR_MUX_PORTC);
 			SIM_SCGC4|= SIM_SCGC4_UART1_MASK;
 			NVIC_ISER|= INT_UART1;
-			data_recieve1=config->callBack_Rx;
+			data_recieve1=call_back;
 			 
 		}
 		else if(base==UART2_BASE_PTR ) //init UART2
@@ -54,7 +54,7 @@ void UART_Init(UART_MemMapPtr base, uart_config_t *config, uint32_t srcClock_Hz)
 			PORTE_PCR23|= PORT_PCR_MUX(PCR_MUX_PORTE);
 			SIM_SCGC4|= SIM_SCGC4_UART2_MASK;
 			NVIC_ISER|= INT_UART2;
-			data_recieve2=config->callBack_Rx;
+			data_recieve2=call_back;
 		}
 		else //UART0
 		{}
@@ -69,26 +69,22 @@ void UART_Init(UART_MemMapPtr base, uart_config_t *config, uint32_t srcClock_Hz)
 		/* Set bit count and parity mode. */
 		temp = base->C1 & ~(UART_C1_PE_MASK | UART_C1_PT_MASK | UART_C1_M_MASK);
 
-		if (kUART_ParityDisabled != config->parityMode)
-		{
-		    temp |= (UART_C1_M_MASK | (uint8_t)config->parityMode);
-		}
+		
 
 		base->C1 = temp;
 
 		/* Enable TX/RX base on configure structure. */
 		temp = base->C2;
 
-		if (config->enableTx)
-		{
+		
+		
 		    temp |= UART_C2_TE_MASK;
-		}
+		
 
-		if (config->enableRx)
-		{
+		
 		    temp |= UART_C2_RE_MASK;
 		    temp |= UART_C2_RIE_MASK; 
-		}
+		
 
 		base->C2 = temp;
 	}
