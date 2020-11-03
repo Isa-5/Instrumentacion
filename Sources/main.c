@@ -24,7 +24,6 @@ int main(void)
 {
 	
 	UART_Init(UART1_BASE_PTR, &Prueba_recieve , Bus_CLK,  baud_rate);
-	UART_Init(UART2_BASE_PTR, &Prueba_recieve , Bus_CLK,  baud_rate);
 	
 	UART_transmit (&Buffer,UART1_BASE_PTR);
 	for(;;) {	   

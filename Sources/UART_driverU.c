@@ -43,7 +43,7 @@ void UART_Init(UART_MemMapPtr base, funcion_de_recieve call_back , uint32_t srcC
 			PORTC_PCR3|= PORT_PCR_MUX(PCR_MUX_PORTC);
 			PORTC_PCR4|= PORT_PCR_MUX(PCR_MUX_PORTC);
 			SIM_SCGC4|= SIM_SCGC4_UART1_MASK;
-			NVIC_ISER|= INT_UART1;
+			NVIC_ISER|= 1<<13;
 			data_recieve1=call_back;
 			 
 		}
@@ -53,7 +53,7 @@ void UART_Init(UART_MemMapPtr base, funcion_de_recieve call_back , uint32_t srcC
 			PORTE_PCR22|= PORT_PCR_MUX(PCR_MUX_PORTE);
 			PORTE_PCR23|= PORT_PCR_MUX(PCR_MUX_PORTE);
 			SIM_SCGC4|= SIM_SCGC4_UART2_MASK;
-			NVIC_ISER|= INT_UART2;
+			NVIC_ISER|= 1<<14;
 			data_recieve2=call_back;
 		}
 		else //UART0
